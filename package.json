@@ -1,0 +1,14 @@
+{
+	"private": true,
+	"scripts": {
+		"parcel-watch": "parcel watch resources/js/index.js --dist-dir public/js",
+		"sass-watch": "sass --watch resources/scss:public/css --style=compressed",
+		"parcel-build": "parcel build resources/js/index.js --dist-dir public/js",
+		"build": "yarn parcel-build",
+		"dev": "concurrently \"yarn parcel-watch\" \"yarn sass-watch\""
+	},
+	"devDependencies": {
+		"concurrently": "^5.3.0",
+		"parcel": "next"
+	}
+}

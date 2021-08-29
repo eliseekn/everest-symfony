@@ -1,0 +1,53 @@
+{% extends 'layout/base.html.twig' %}
+
+{% block body %}
+    <section class="container my-5">
+        <div class="row row-cols-2">
+
+            {% for post in paginator.items  %}
+            <article class="col mb-5">
+                <div class="card shadow-sm">
+                    <img src="{{ asset(post.image) }}" class="card-img-top" alt="Image de l'article">
+                    
+                    <div class="card-body">
+                        <h2 class="card-title post-title">{{ post.title }}</h2>
+                        <p class="card-text mt-3 text-justify">
+                            {{ post.content|u.truncate(290, '[...]') }}
+                        </p>
+                        <a href="{{ url('post.index', {'slug': post.slug}) }}" class="btn btn-dark read-more">Read more</a>
+                    </div>
+                </div>
+            </article>
+            {% endfor %}
+
+        </div>
+    </section>
+
+    <nav class="my-5">
+		<ul class="pagination justify-content-center">
+
+			{% if paginator.page > 1 %}
+			<li class="page-item">
+				<a class="page-link text-dark" href="{{ url('home', {'page': paginator.page - 1}) }}">
+					&laquo;
+				</a>
+			</li>
+			{% endif %}
+
+			{% if paginator.total_pages > 1 %}
+            <li class="page-item page-link text-dark">
+				Page {{ paginator.page }}/{{ paginator.total_pages }}
+			</li>
+            {% endif %}
+			
+			{% if paginator.page < paginator.total_pages %}
+			<li class="page-item">
+				<a class="page-link text-dark" href="{{ url('home', {'page': paginator.page + 1}) }}">
+					&raquo;
+				</a>
+			</li>
+			{% endif %}
+
+		</ul>
+	</nav>
+{% endblock %}

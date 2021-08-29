@@ -1,0 +1,38 @@
+{% extends 'layout/dashboard.html.twig' %}
+
+{% block title %}Create post{% endblock %}
+
+{% block body %}
+    <div class="container mt-5">
+        <h1>Create post</h1>
+
+        <div class="card shadow-sm">
+            <div class="card-body">
+                {% for message in app.flashes('success') %}
+                    <div class="alert alert-success">
+                        {{ message }}
+                    </div>
+                {% endfor %}
+
+                {{ form_start(form) }}
+                <div class="mb-3">
+                    {{ form_label(form.title, null, {'label_attr': {'class': 'form-label'}}) }}
+                    {{ form_widget(form.title, {'attr': {'class': 'form-control'}}) }}
+                </div>
+
+                <div class="mb-3">
+                    {{ form_label(form.file, 'Image', {'label_attr': {'class': 'form-label'}}) }}
+                    {{ form_widget(form.file, {'attr': {'class': 'form-control'}}) }}
+                </div>
+
+                <div class="mb-3">
+                    {{ form_label(form.content, null, {'label_attr': {'class': 'form-label'}}) }}
+                    {{ form_widget(form.content, {'attr': {'class': 'form-control'}}) }}
+                </div>
+
+                <button type="submit" class="btn btn-dark">Save</button>
+                {{ form_end(form) }}
+            </div>
+        </div>
+    </div>
+{% endblock %}
