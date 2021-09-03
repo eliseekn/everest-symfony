@@ -26,6 +26,5 @@ class CommentRepository extends ServiceEntityRepository
             ->setParameter('post_id', $postId)
             ->orderBy('c.created_at', 'desc')
             ->getQuery();
-            //->getArrayResult();
     }
 }
