@@ -1,20 +1,17 @@
 {% extends 'layout/dashboard.html.twig' %}
 
-{% block title %}Dashboard{% endblock %}
+{% block title %}Comments | {{ post.title }}{% endblock %}
 
 {% block body %}
     <div class="container mt-5">
-        <div class="d-flex justify-content-between align-items-center mb-5">
-            <h1>Posts ({{ paginator.items|length }})</h1>
-            <a href="{{ url('post.create') }}" class="btn btn-dark" target="_blank">Create post</a>
-        </div>
+        <h1>Comments ({{ paginator.items|length }})</h1>
+        <h4 class="fst-italic mb-5">{{ post.title }}</h4>
 
         <table class="table">
             <thead>
                 <tr>
                     <th scope="col">#</th>
-                    <th scope="col">Image</th>
-                    <th scope="col">Title</th>
+                    <th scope="col">Author</th>
                     <th scope="col">Content</th>
                     <th scope="col">Created at</th>
                     <th scope="col"></th>
@@ -22,22 +19,15 @@
             </thead>
 
             <tbody>
-                {% for post in paginator.items %}
+                {% for comment in paginator.items %}
                 <tr valign="middle">
                     <th scope="row">{{ loop.index }}</th>
-                    <td><img src="{{ asset(post.image) }}" alt="Image de l'article" width="200"></td>
-                    <td>{{ post.title }}</td>
-                    <td>{{ post.content|u.truncate(290, '[...]') }}</td>
-                    <td>{{ post.createdAt|format_datetime('medium', 'none') }}</td>
+                    <td>{{ comment.author }}</td>
+                    <td>{{ comment.content|u.truncate(290, '[...]') }}</td>
+                    <td>{{ comment.createdAt|format_datetime('medium', 'none') }}</td>
                     <td>
                         <div class="d-flex align-items-center">
-                            <a href="{{ url('dashboard.comments', {'postId': post.id}) }}" title="Comments" target="_blank">
-                                <i class="fa fa-comments text-primary"></i>
-                            </a>
-                            <a href="{{ url('post.edit', {'id': post.id}) }}" class="mx-3" title="Edit" target="_blank">
-                                <i class="fa fa-edit text-primary"></i>
-                            </a>
-                            <a href="{{ url('post.delete', {'id': post.id}) }}" title="Delete">
+                            <a href="{{ url('comment.delete', {'id': comment.id, 'postId': post.id}) }}" title="Delete">
                                 <i class="fa fa-trash text-danger"></i>
                             </a>
                         </div>
@@ -51,7 +41,7 @@
             <ul class="pagination justify-content-center">
                 {% if paginator.page > 1 %}
                 <li class="page-item">
-                    <a class="page-link text-dark" href="{{ url('dashboard', {'page': paginator.page - 1}) }}">
+                    <a class="page-link text-dark" href="{{ url('dashboard.comments', {'postId': post.id, 'page': paginator.page - 1}) }}">
                         &laquo;
                     </a>
                 </li>
@@ -65,7 +55,7 @@
                 
                 {% if paginator.page < paginator.total_pages %}
                 <li class="page-item">
-                    <a class="page-link text-dark" href="{{ url('dashboard', {'page': paginator.page + 1}) }}">
+                    <a class="page-link text-dark" href="{{ url('dashboard.comments', {'postId': post.id, 'page': paginator.page + 1}) }}">
                         &raquo;
                     </a>
                 </li>

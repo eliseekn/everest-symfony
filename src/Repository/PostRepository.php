@@ -2,6 +2,7 @@
 
 namespace App\Repository;
 
+use App\Entity\Comment;
 use App\Entity\Post;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\ORM\Tools\Pagination\Paginator;
@@ -33,6 +34,15 @@ class PostRepository extends ServiceEntityRepository
     {
         return $this->createQueryBuilder('p')
             ->orderBy('p.created_at', 'desc')
+            ->getQuery();
+    }
+
+    public function findAllWithComments()
+    {
+        return $this->createQueryBuilder('p')
+            ->select('c')
+            ->from(Comment::class, 'c')
+            ->innerJoin('c.findByPost', 'p')
             ->getQuery();
     }
 }

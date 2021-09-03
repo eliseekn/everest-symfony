@@ -2,45 +2,13 @@
 
 namespace App\Tests;
 
-use App\Repository\PostRepository;
-use App\Repository\UserRepository;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
+use App\Repository\PostRepository;
+use App\Repository\UserRepository;
 
-class DashboardTest extends WebTestCase
+class PostTest extends WebTestCase
 {
-    public function testCanNotNavigateToDashboardIfNotAuthenticated(): void
-    {
-        $client = static::createClient();
-        $client->request('GET', '/dashboard');
-
-        $this->assertResponseRedirects();
-    }
-
-    public function testCanNotNavigateToDashboardIfRoleIsUser(): void
-    {
-        $client = static::createClient();
-        $userRepository = static::$container->get(UserRepository::class);
-        $user = $userRepository->findOneByEmail('user@mail.com');
-
-        $client->loginUser($user);
-        $client->request('GET', '/dashboard');
-
-        $this->assertResponseStatusCodeSame(403);
-    }
-
-    public function testCanNavigateToDashboardIfRoleIsAdmin()
-    {
-        $client = static::createClient();
-        $userRepository = static::$container->get(UserRepository::class);
-        $user = $userRepository->findOneByEmail('admin@mail.com');
-
-        $client->loginUser($user);
-        $client->request('GET', '/dashboard');
-
-        $this->assertResponseIsSuccessful();
-    }
-
     public function testCanStorePost()
     {
         $client = static::createClient();
@@ -48,7 +16,7 @@ class DashboardTest extends WebTestCase
         $user = $userRepository->findOneByEmail('admin@mail.com');
 
         $client->loginUser($user);
-        $client->request('GET', '/dashboard/post/create');
+        $client->request('GET', '/post/create');
 
         $this->assertResponseIsSuccessful();
 
@@ -58,7 +26,7 @@ class DashboardTest extends WebTestCase
             'post[file]' => new UploadedFile(static::$kernel->getProjectDir() . '/public/uploads/img/post-image.svg', 'test-upload.svg')
         ]);
 
-        $this->assertResponseRedirects('/dashboard/post/create');
+        $this->assertResponseRedirects('/post/create');
     }
 
     public function testCanUpdatePost()
@@ -68,7 +36,7 @@ class DashboardTest extends WebTestCase
         $user = $userRepository->findOneByEmail('admin@mail.com');
 
         $client->loginUser($user);
-        $client->request('GET', '/dashboard/post/create');
+        $client->request('GET', '/post/create');
 
         $postTitle = 'Lorem ipsum ' . rand(0, 100);
 
@@ -81,10 +49,10 @@ class DashboardTest extends WebTestCase
         $postRepository = static::$container->get(PostRepository::class);
         $post = $postRepository->findOneBy(['title' => $postTitle]);
 
-        $client->request('GET', '/dashboard/post/edit/' . $post->getId());
+        $client->request('GET', '/post/edit/' . $post->getId());
         $client->submitForm('Save', ['post[content]' => 'Excepteur sint occaecat cupidatat non proident']);
 
-        $this->assertResponseRedirects('/dashboard/post/edit/' . $post->getId());
+        $this->assertResponseRedirects('/post/edit/' . $post->getId());
     }
 
     public function testCanDeletePost()
@@ -94,7 +62,7 @@ class DashboardTest extends WebTestCase
         $user = $userRepository->findOneByEmail('admin@mail.com');
 
         $client->loginUser($user);
-        $client->request('GET', '/dashboard/post/create');
+        $client->request('GET', '/post/create');
 
         $postTitle = 'Lorem ipsum ' . rand(0, 100);
 
@@ -107,7 +75,7 @@ class DashboardTest extends WebTestCase
         $postRepository = static::$container->get(PostRepository::class);
         $post = $postRepository->findOneBy(['title' => $postTitle]);
 
-        $client->request('GET', '/dashboard/post/delete/' . $post->getId());
+        $client->request('GET', '/post/delete/' . $post->getId());
         $this->assertResponseRedirects('/dashboard');
     }
 }

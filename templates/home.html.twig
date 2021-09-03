@@ -25,7 +25,6 @@
 
     <nav class="my-5">
 		<ul class="pagination justify-content-center">
-
 			{% if paginator.page > 1 %}
 			<li class="page-item">
 				<a class="page-link text-dark" href="{{ url('home', {'page': paginator.page - 1}) }}">
@@ -47,7 +46,6 @@
 				</a>
 			</li>
 			{% endif %}
-
 		</ul>
 	</nav>
 {% endblock %}

@@ -1,6 +1,6 @@
 # Everest (Symfony flavor)
 
-Blog template [everest](https://github.com/eliseekn/everest) and backend with Symfony 5
+Blog [everest](https://github.com/eliseekn/everest) backend with Symfony 5
 
 ## How it works?
 
