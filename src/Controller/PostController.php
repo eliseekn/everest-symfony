@@ -55,14 +55,14 @@ class PostController extends AbstractController
     public function index(Request $request, PostRepository $postRepository, CommentRepository $commentRepository, string $slug): Response
     {
         $post = $postRepository->findOneBySlug($slug);
-        $comments = $commentRepository->findByPost($post->getId());
+        $comments = $post->getComments();
 
         $comment = new Comment();
         $form = $this->createForm(CommentType::class, $comment);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $comment->setPostId($post->getId());
+            $comment->setPost($post);
             $comment->setCreatedAt(new DateTime());
 
             $entityManager = $this->getDoctrine()->getManager();

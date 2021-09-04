@@ -45,6 +45,12 @@ class Comment
      */
     private $author;
 
+    /**
+     * @ORM\ManyToOne(targetEntity=Post::class, inversedBy="comments")
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $Post;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -106,6 +112,18 @@ class Comment
     public function setAuthor(string $author): self
     {
         $this->author = $author;
+
+        return $this;
+    }
+
+    public function getPost(): ?Post
+    {
+        return $this->Post;
+    }
+
+    public function setPost(?Post $Post): self
+    {
+        $this->Post = $Post;
 
         return $this;
     }
