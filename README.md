@@ -8,5 +8,7 @@ On your console
 
 ```
 make tests
+php bin/console doctrine:migrations:migrate
+php bin/console doctrine:fixtures:load
 symfony server:start
 ```
