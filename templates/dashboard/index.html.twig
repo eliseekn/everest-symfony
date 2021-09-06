@@ -9,6 +9,12 @@
             <a href="{{ url('post.create') }}" class="btn btn-dark" target="_blank">Create post</a>
         </div>
 
+        {% for message in app.flashes('success') %}
+            <div class="alert alert-success">
+                {{ message }}
+            </div>
+        {% endfor %}
+                
         <table class="table">
             <thead>
                 <tr>

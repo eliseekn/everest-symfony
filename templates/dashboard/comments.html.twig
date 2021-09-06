@@ -7,6 +7,12 @@
         <h1>Comments ({{ paginator.items|length }})</h1>
         <h4 class="fst-italic mb-5">{{ post.title }}</h4>
 
+        {% for message in app.flashes('success') %}
+            <div class="alert alert-success">
+                {{ message }}
+            </div>
+        {% endfor %}
+                
         <table class="table">
             <thead>
                 <tr>

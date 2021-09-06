@@ -20,6 +20,8 @@ class CommentController extends AbstractController
         $entityManager->remove($commentRepository);
         $entityManager->flush();
 
+        $this->addFlash('success', 'Comment has been deleted successfully');
+
         return $this->redirectToRoute('dashboard.comments', ['postId' => $postId]);
     }
 }

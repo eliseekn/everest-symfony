@@ -14,6 +14,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use App\Entity\Post;
 use App\Service\FileUploader;
 use App\Form\PostType;
+use Symfony\Component\HttpKernel\KernelInterface;
 use Symfony\Component\String\Slugger\SluggerInterface;
 
 class PostController extends AbstractController
@@ -119,13 +120,17 @@ class PostController extends AbstractController
     /**
      * @Route("/post/delete/{id}", name="post.delete")
      */
-    public function delete(PostRepository $postRepository, int $id): Response
+    public function delete(KernelInterface $kernelInterface, PostRepository $postRepository, int $id): Response
     {
         $post = $postRepository->find($id);
+
+        unlink($kernelInterface->getProjectDir() . '/public/' . $post->getImage());
 
         $entityManager = $this->getDoctrine()->getManager();
         $entityManager->remove($post);
         $entityManager->flush();
+
+        $this->addFlash('success', 'Post has been deleted successfully');
 
         return $this->redirectToRoute('dashboard');
     }
