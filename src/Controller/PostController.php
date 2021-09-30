@@ -14,6 +14,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use App\Entity\Post;
 use App\Service\FileUploader;
 use App\Form\PostType;
+use Exception;
 use Symfony\Component\HttpKernel\KernelInterface;
 use Symfony\Component\String\Slugger\SluggerInterface;
 
@@ -124,7 +125,11 @@ class PostController extends AbstractController
     {
         $post = $postRepository->find($id);
 
-        unlink($kernelInterface->getProjectDir() . '/public/' . $post->getImage());
+        try {
+            unlink($kernelInterface->getProjectDir() . '/public/' . $post->getImage());
+        } catch (Exception $e) {
+            
+        }
 
         $entityManager = $this->getDoctrine()->getManager();
         $entityManager->remove($post);

@@ -24,7 +24,7 @@ class CommentTest extends WebTestCase
         $client->submitForm('Save', [
             'post[title]' => $postTitle, 
             'post[content]' => 'Lorem ipsum dolor sit amet',
-            'post[file]' => new UploadedFile(static::$kernel->getProjectDir() . '/public/uploads/img/post-image.svg', 'test-upload.svg')
+            'post[file]' => new UploadedFile(static::$kernel->getProjectDir() . '/public/img/post.svg', 'photo.svg')
         ]);
 
         $postRepository = static::$container->get(PostRepository::class);
@@ -54,7 +54,7 @@ class CommentTest extends WebTestCase
         $client->submitForm('Save', [
             'post[title]' => $postTitle, 
             'post[content]' => 'Lorem ipsum dolor sit amet',
-            'post[file]' => new UploadedFile(static::$kernel->getProjectDir() . '/public/uploads/img/post-image.svg', 'test-upload.svg')
+            'post[file]' => new UploadedFile(static::$kernel->getProjectDir() . '/public/img/post.svg', 'photo.svg')
         ]);
 
         $postRepository = static::$container->get(PostRepository::class);

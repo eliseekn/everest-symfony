@@ -23,7 +23,7 @@ class PostTest extends WebTestCase
         $client->submitForm('Save', [
             'post[title]' => 'Lorem ipsum', 
             'post[content]' => 'Lorem ipsum dolor sit amet',
-            'post[file]' => new UploadedFile(static::$kernel->getProjectDir() . '/public/uploads/img/post-image.svg', 'test-upload.svg')
+            'post[file]' => new UploadedFile(static::$kernel->getProjectDir() . '/public/img/post.svg', 'post.svg')
         ]);
 
         $this->assertResponseRedirects('/post/create');
@@ -43,7 +43,7 @@ class PostTest extends WebTestCase
         $client->submitForm('Save', [
             'post[title]' => $postTitle, 
             'post[content]' => 'Lorem ipsum dolor sit amet',
-            'post[file]' => new UploadedFile(static::$kernel->getProjectDir() . '/public/uploads/img/post-image.svg', 'test-upload.svg')
+            'post[file]' => new UploadedFile(static::$kernel->getProjectDir() . '/public/img/post.svg', 'post.svg')
         ]);
 
         $postRepository = static::$container->get(PostRepository::class);
@@ -69,7 +69,7 @@ class PostTest extends WebTestCase
         $client->submitForm('Save', [
             'post[title]' => $postTitle, 
             'post[content]' => 'Lorem ipsum dolor sit amet',
-            'post[file]' => new UploadedFile(static::$kernel->getProjectDir() . '/public/uploads/img/post-image.svg', 'test-upload.svg')
+            'post[file]' => new UploadedFile(static::$kernel->getProjectDir() . '/public/img/post.svg', 'post.svg')
         ]);
 
         $postRepository = static::$container->get(PostRepository::class);
